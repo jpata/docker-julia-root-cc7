@@ -10,7 +10,8 @@ RUN /opt/julia/julia -E 'Pkg.clone("https://github.com/jpata/Cxx.jl.git");Pkg.ch
 
 RUN curl -s https://root.cern.ch/download/root_v6.06.06.Linux-centos7-x86_64-gcc4.8.tar.gz > /opt/root.tar.gz
 RUN cd /opt && tar xf root.tar.gz
-ADD roottest.jl /root/roottest.jl 
+RUN source /opt/root/bin/thisroot.sh && /opt/julia/julia -E 'Pkg.add("ROOT")' && cd /root/.julia/v0.5/ROOT/ && git checkout cxx && /opt/julia/julia -E 'Pkg.build("ROOT")'
+
 #RUN source /opt/root/bin/thisroot.sh && /opt/julia/julia /root/roottest.jl
 #RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 #    curl -s -L https://repo.continuum.io/archive/Anaconda2-2.5.0-Linux-x86_64.sh > Anaconda2-2.5.0-Linux-x86_64.sh && \
